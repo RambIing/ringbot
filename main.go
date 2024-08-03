@@ -84,6 +84,9 @@ func main() {
 	settingsManager.InitializeSettings()
 	DgSession, _ = discordgo.New(fmt.Sprintf("Bot %s", settingsManager.GetBotToken()))
 
+	// Intent for certain servers to view guild info
+	DgSession.Identify.Intents = discordgo.IntentsGuilds | discordgo.IntentsGuildMessages | discordgo.IntentsGuildVoiceStates
+
 	DgSession.AddHandler(func(s *discordgo.Session, r *discordgo.Ready) {
 		s.UpdateGameStatus(0, "/call (number)")
 		log.Printf("Logged in as: %v#%v \n", s.State.User.Username, s.State.User.Discriminator)
